@@ -17,7 +17,7 @@ class MapQuantityValueKey extends AbstractMapKeyStrategy
 {
 
     const ALLOWED_TYPES_ARRAY = ['inputQuantityValue', 'quantityValue'];
-    const TYPE = 'text';
+    const TYPE = 'quantityValue';
 
     /**
      * @param KeyConfig   $field
@@ -38,14 +38,16 @@ class MapQuantityValueKey extends AbstractMapKeyStrategy
     ): void {
         $names = $this->mapStringNames($attribute['name'], $group['name'], $arrayMapping);
         $value = $attribute['value']['value'];
+        $unit = "";
         if ($attribute['value']['unitAbbreviation'] != "") {
-            $value .= ' ' . $attribute['value']['unitAbbreviation'];
+            $unit  = $attribute['value']['unitAbbreviation'];
         }
 
         $parsedData = [
             'type' => static::TYPE,
             'label' => $this->getLabel($field->getTitle(), $language),
-            'value' => $value
+            'value' => $value,
+            'unit' => $unit
         ];
         foreach ($names as $name) {
             $obj->{$name} = $parsedData;
